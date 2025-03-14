@@ -9,8 +9,8 @@ const Header = () => {
       <a href='#home'>Ínicio</a>
       <a href='#home'>Projetos</a>
       <a href='#home'>Agendamento</a>
-      <hr style={{ border: '0.5px solid black', height: '10px' }} />
-      <button className='button'>Logar</button>
+      <hr />
+      <button className='button'>Login</button>
     </div>
    </nav>
   );
