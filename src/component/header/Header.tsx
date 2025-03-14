@@ -1,16 +1,24 @@
 import React from 'react'
 import './Header.css';
+import { Link, useNavigate } from 'react-router';
 
 
 const Header = () => {
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/login')
+  }
+  
   return (
    <nav className='navbar'>
     <div className='navbar-links'>
-      <a href='#home'>Ínicio</a>
-      <a href='#home'>Projetos</a>
-      <a href='#home'>Agendamento</a>
+      <Link to ="/">Ínicio</Link>
+      <Link to ="/projetos">Projetos</Link>
+      <Link to ="/agendamento">Agendamento</Link>
       <hr />
-      <button className='button'>Login</button>
+      <button onClick={handleClick} className='button'>Login</button>
     </div>
    </nav>
   );
