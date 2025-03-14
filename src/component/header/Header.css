@@ -5,7 +5,7 @@
   align-items: center;
   background-color: #f4f4f4;
   padding: 1rem;
-  font-family: "Inter", sans-serif;
+  font-family: "Inter", sans-serif, Helvetica, Arial, sans-serif;
   font-style: normal;
   font-size: 16px;
 
@@ -25,6 +25,8 @@
   cursor: pointer; 
   font-size: 16px; 
   transition: background-color 0.3s ease;
+  font-family: "Inter", sans-serif, Helvetica, Arial, sans-serif;
+  font-style: normal;
 }
 
 .button:hover {

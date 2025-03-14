@@ -1,0 +1,57 @@
+img{
+  display: block;
+  max-width: 100%;
+}
+
+h1,h2{
+  font-family: "Inter", sans-serif, Helvetica, Arial, sans-serif;
+  font-style: normal;
+}
+
+.text-blue{
+  color:#084EB4;
+  font-size: 1.5rem;
+  margin-left: 0.5rem;
+}
+
+.text-white{
+  color: white;
+  font-size: 1.5rem;
+  margin-left: 0.5rem;
+}
+
+.h2-text-white{
+  color: white;;
+}
+
+h2{
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.button{
+  display: block;
+  margin: 0 auto;
+  background-color: #084EB4; 
+  color: white;
+  padding: 5px 15px; 
+  border: none; 
+  border-radius: 8px; 
+  cursor: pointer; 
+  font-size: 16px; 
+  transition: background-color 0.3s ease;
+  font-family: "Inter", sans-serif, Helvetica, Arial, sans-serif;
+  font-style: normal;
+  align-items: center;
+}
+
+
+.button:hover {
+  background-color: gray; 
+}
+
+.container-inovacao{
+  background-color: #084EB4;
+}
