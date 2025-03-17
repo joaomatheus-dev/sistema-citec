@@ -1,6 +1,7 @@
 img{
   display: block;
   max-width: 100%;
+  border-radius: 8px;
 }
 
 h1,h2{
@@ -11,6 +12,7 @@ h1,h2{
 .text-blue{
   color:#084EB4;
   font-size: 1.5rem;
+  margin-top: 1rem;
   margin-left: 0.5rem;
 }
 
@@ -21,7 +23,7 @@ h1,h2{
 }
 
 .h2-text-white{
-  color: white;;
+  color: white;
 }
 
 h2{
@@ -31,9 +33,10 @@ h2{
   font-size: 0.75rem;
 }
 
-.button{
+.button-visita{
   display: block;
   margin: 0 auto;
+  margin-bottom: 1rem;
   background-color: #084EB4; 
   color: white;
   padding: 5px 15px; 
@@ -47,11 +50,83 @@ h2{
   align-items: center;
 }
 
+.button-projetos {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 1.5rem;
+  background-color: #084EB4;
+  color: white;
+  padding: 5px 15px;
+  border: 2px solid white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  font-family: "Inter", sans-serif, Helvetica, Arial, sans-serif;
+  font-style: normal;
+  align-items: center;
+}
 
-.button:hover {
+.button-visita:hover, .button-projetos:hover {
   background-color: gray; 
 }
 
 .container-inovacao{
   background-color: #084EB4;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.container-inovacao .text-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-conheca{
+  background-color: white;
+}
+
+.container-inovacao .text-content {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .container-inovacao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .container-inovacao img {
+    order: 2;
+    max-width: 50%;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  }
+
+  .container-inovacao .text-content {
+    order: 1; 
+    max-width: 50%;
+    margin-left: 3rem;
+  }
+
+  .container-conheca {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .container-conheca img {
+    order: 2;
+    max-width: 30%;
+    margin-left: 1rem; 
+    margin-right: 3rem;
+  }
+
+  .container-conheca .text-content {
+    order: 1;
+    max-width: 50%;
+    margin-left: 3rem;
+  }
 }

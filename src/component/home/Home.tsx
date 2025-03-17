@@ -1,28 +1,31 @@
 import React from 'react'
 import './Home.css'
-import { useNavigate } from 'react-router';
+import { Link,  } from 'react-router';
 
 const Home = () => {  
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate('/agendamento')
-  }
-
   return (  
     <div>
-      <div>
+      <div className='container-conheca'>
+        <div className='text-content'>
+          <div>
+              <h1 className='text-blue'>Conheça o CITEC</h1>
+              <h2>O Centro de Inovação Tecnológica do Cesmac é o lugar onde ideias ganham vida. Aqui, alunos e professores de diversas áreas trabalham juntos no desenvolvimento de soluções inovadoras, explorando robótica, inteligência artificial, realidade virtual, aplicativos, simuladores e protótipos. Com um ambiente moderno e equipamentos de última geração – como servidores avançados, impressoras 3D, cortadoras a laser e óculos de realidade virtual –, oferecemos tudo o que você precisa para pesquisar, experimentar e criar o futuro.</h2>
+            </div>
+            <Link to="/agendamento">
+              <button className='button-visita'>Agende uma visita agora!</button>
+            </Link>
+        </div>
         <img src={require('../../assets/imgs/RapazComputador.png')} />
       </div>
-      <div>
-        <h1 className='text-blue'>Conheça o CITEC</h1>
-        <h2>O Centro de Inovação Tecnológica do Cesmac é o lugar onde ideias ganham vida. Aqui, alunos e professores de diversas áreas trabalham juntos no desenvolvimento de soluções inovadoras, explorando robótica, inteligência artificial, realidade virtual, aplicativos, simuladores e protótipos. Com um ambiente moderno e equipamentos de última geração – como servidores avançados, impressoras 3D, cortadoras a laser e óculos de realidade virtual –, oferecemos tudo o que você precisa para pesquisar, experimentar e criar o futuro.</h2>
-      </div>
-      <button onClick={handleClick} className='button'>Agende uma visita agora!</button>
       <div className='container-inovacao'>
-        <h1 className='text-white'>Inovação a serviço da sociedade</h1>
-        <img className='foto-membros' src={require('../../assets/imgs/MembrosRobotica.jpg')} />
-        <h2 className='h2-text-white'>O Centro de Inovação Tecnológica do Cesmac é o lugar onde ideias ganham vida. Aqui, alunos e professores de diversas áreas trabalham juntos no desenvolvimento de soluções inovadoras, explorando robótica, inteligência artificial, realidade virtual, aplicativos, simuladores e protótipos. Com um ambiente moderno e equipamentos de última geração – como servidores avançados, impressoras 3D, cortadoras a laser e óculos de realidade virtual –, oferecemos tudo o que você precisa para pesquisar, experimentar e criar o futuro.</h2>
+        <div className='text-content'>
+          <h1 className='text-white'>Inovação a serviço da sociedade</h1>
+          <h2 className='h2-text-white'>O Centro de Inovação Tecnológica do Cesmac já desenvolveu diversos projetos de impacto social, como a célula de descontaminação por ozônio, o simulador de centro cirúrgico em realidade virtual e próteses para animais. Também criamos simuladores para situações críticas, como pânico de voo, ressonância magnética e tribunal do júri, além de aplicativos voltados para saúde, educação, combate à violência e bioquímica.<br/> Na área de inteligência artificial, desenvolvemos soluções para medicina, educação e segurança, incluindo reconhecimento facial, de objetos e de voz. Um dos destaques é a chamada inteligente por reconhecimento facial, que identifica automaticamente os alunos em sala de aula.</h2>
+          <Link to = "/projetos">
+            <button className='button-projetos'>Conheça nossos projetos</button>
+          </Link>
+        </div>
+          <img className='foto-membros' src={require('../../assets/imgs/MembrosRobotica.jpg')} />
       </div>
       <div>
         <h1 className='text-blue'>Tecnologia que transforma vidas</h1>
