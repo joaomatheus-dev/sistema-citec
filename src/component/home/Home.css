@@ -100,9 +100,9 @@ h2{
 
   .container-inovacao img {
     order: 2;
-    max-width: 50%;
+    max-width: 30%;
     margin-left: 1rem;
-    margin-right: 1rem;
+    margin-right: 3rem;
   }
 
   .container-inovacao .text-content {

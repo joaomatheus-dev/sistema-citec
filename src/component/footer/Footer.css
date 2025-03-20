@@ -5,6 +5,7 @@
   background-color: #f4f4f4;
   padding: 20px;
   flex-wrap: wrap;
+  bottom: 0px;
 }
 
 .footer-column {

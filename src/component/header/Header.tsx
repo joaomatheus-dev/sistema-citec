@@ -1,15 +1,9 @@
 import React from 'react'
 import './Header.css';
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 
 
 const Header = () => {
-
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate('/login')
-  }
   
   return (
    <nav className='navbar'>
@@ -18,7 +12,9 @@ const Header = () => {
       <Link to ="/projetos">Projetos</Link>
       <Link to ="/agendamento">Agendamento</Link>
       <hr />
-      <button onClick={handleClick} className='button'>Login</button>
+      <Link to="/login">
+        <button className='button'>Login</button>
+      </Link>
     </div>
    </nav>
   );
