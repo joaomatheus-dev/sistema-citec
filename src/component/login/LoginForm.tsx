@@ -12,8 +12,6 @@ const LoginForm = () => {
   const [email, setEmail] = React.useState<string>('');
   const [password, setPassword] = React.useState<string>('');
 
-  
-
   const handleLogin = async (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>{
     event.preventDefault();
     try{
