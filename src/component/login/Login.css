@@ -1,0 +1,113 @@
+.login {
+  display: block;
+  justify-content: center;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #f4f4f4;
+  max-width: 60%;
+  border-radius: 15px;
+  padding: 1rem;
+}
+
+h1, p {
+  font-family: "Inter", sans-serif, Helvetica, Arial, sans-serif;
+}
+
+form {
+  max-width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input {
+  margin-bottom: .3rem;
+  font-weight: bold;
+  font-family: "Inter", sans-serif, Helvetica, Arial, sans-serif;
+  box-shadow: 0 4px 6px rgba(190, 190, 190, 1);
+  border: none;
+  border-bottom: 1px solid #CCC;
+  border-radius: 7px;
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.button-login {
+  padding: 1rem;
+  background-color: blue;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 50%;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.button-login:hover {
+  background-color: gray;
+}
+
+@media (max-width: 600px) {
+  .login {
+    padding: 15px;
+  }
+
+  .login h1 {
+    font-size: 20px;
+  }
+
+  .login p {
+    font-size: 14px;
+  }
+
+  .login input {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .login .button-login {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 400px) {
+  .login {
+    padding: 10px;
+  }
+
+  .login h1 {
+    font-size: 18px;
+  }
+
+  .login p {
+    font-size: 12px;
+  }
+
+  .login input {
+    font-size: 12px;
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .login .button-login {
+    font-size: 12px;
+    padding: 6px;
+    max-width: 100%;
+  }
+}
