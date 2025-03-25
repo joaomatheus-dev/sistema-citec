@@ -54,7 +54,8 @@ const Register = () => {
       let dataAdmin: IAdmin = {
         idAdmin: idAdmin,
         name: nome,
-        email: email
+        email: email,
+        admin: true,
       };
 
       await setDoc(doc(db, "admins", idAdmin), dataAdmin);
