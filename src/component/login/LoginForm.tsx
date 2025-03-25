@@ -16,7 +16,7 @@ const LoginForm = () => {
     event.preventDefault();
     try{
       Swal.fire({
-        title: 'Cadastrando usuário...',
+        title: 'Logando usuário...',
         html: `
          <div style="display: flex; flex-direction: column; align-items: center;">
          <BarLoader color="#0000ff" width={150} />
@@ -35,7 +35,7 @@ const LoginForm = () => {
           Swal.fire({
             icon: 'success',
             title: 'Sucesso!',
-            text: 'Usuário cadastrado com sucesso.',
+            text: 'Usuário logado com sucesso.',
             showConfirmButton: true,
           }).then(() => {
             navigate('/');
