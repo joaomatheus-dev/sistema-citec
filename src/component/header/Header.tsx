@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './Header.css';
 import { Link } from 'react-router';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
-import Dropdown from 'react-bootstrap/Dropdown';
 import Swal from 'sweetalert2';
 
 const Header = () => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const auth = getAuth();
@@ -52,33 +53,46 @@ const Header = () => {
     }
   }
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   if (loading) {
     return <div className="navbar">Carregando...</div>;
   }
 
   return (
     <nav className='navbar'>
-      <div className='navbar-links'>
-        <Link to="/">Ínicio</Link>
-        <Link to="/projetos">Projetos</Link>
-        <Link to="/agendamento">Agendamento</Link>
+      <button className="mobile-menu-button" onClick={toggleMobileMenu}>
+        ☰
+      </button>
+      <div className={`navbar-links ${mobileMenuOpen ? 'active' : ''}`}>
+        <Link to="/" onClick={() => setMobileMenuOpen(false)}>Ínicio</Link>
+        <Link to="/projetos" onClick={() => setMobileMenuOpen(false)}>Projetos</Link>
+        <Link to="/agendamento" onClick={() => setMobileMenuOpen(false)}>Agendamento</Link>
+        
         <div className="navbar-divider"></div>
+        
         {user ? (
-          <Dropdown>
-            <Dropdown.Toggle>
+          <div className="user-dropdown">
+            <button className="user-button" onClick={toggleDropdown}>
               {user.displayName || user.email || 'Usuário'}
-            </Dropdown.Toggle>
-      
-            <Dropdown.Menu>
-              <Dropdown.Item 
-                onClick={handleLogout}
-              >
-                Logout
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+              <span className={`dropdown-arrow ${dropdownOpen ? 'open' : ''}`}>▼</span>
+            </button>
+            {dropdownOpen && (
+              <div className="dropdown-menu">
+                <button className="dropdown-item logout-button" onClick={handleLogout}>
+                  Sair
+                </button>
+              </div>
+            )}
+          </div>
         ) : (
-          <Link to="/login">
+          <Link to="/login" onClick={() => setMobileMenuOpen(false)}>
             <button className='button'>Login</button>
           </Link>
         )}
