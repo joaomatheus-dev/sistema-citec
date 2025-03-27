@@ -70,6 +70,7 @@ const Header = () => {
       <button className="mobile-menu-button" onClick={toggleMobileMenu}>
         ☰
       </button>
+      
       <div className={`navbar-links ${mobileMenuOpen ? 'active' : ''}`}>
         <Link to="/" onClick={() => setMobileMenuOpen(false)}>Ínicio</Link>
         <Link to="/projetos" onClick={() => setMobileMenuOpen(false)}>Projetos</Link>

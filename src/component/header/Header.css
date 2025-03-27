@@ -28,7 +28,7 @@
 }
 
 .button {
-  background-color: blue;
+  background-color: #084eb4;
   color: white;
   padding: 8px 16px;
   border: none;
@@ -44,19 +44,13 @@
   background-color: #0066cc;
 }
 
-.navbar-divider {
-  height: 24px;
-  width: 1px;
-  background-color: #ccc;
-}
-
 .user-dropdown {
   position: relative;
   display: inline-block;
 }
 
 .user-button {
-  background-color: blue;
+  background-color: #084eb4;
   color: white;
   padding: 8px 16px;
   border: none;
@@ -66,8 +60,9 @@
   transition: background-color 0.3s ease;
   font-family: "Inter", sans-serif, Helvetica, Arial, sans-serif;
   font-style: normal;
+  width: 160px;
   display: flex;
-  align-items: center;
+  justify-content: center;
   gap: 6px;
 }
 
@@ -114,9 +109,12 @@
 }
 
 .logout-button {
+  width: 100%;
   background-color: red;
   color: #f1f1f1;
-  font-weight: bold;
+  font-weight: 500;
+  border-radius: 8px;
+  text-align: center;
 }
 
 .mobile-menu-button {
@@ -127,6 +125,7 @@
   cursor: pointer;
   padding: 8px;
   z-index: 100;
+  align-items: left;
 }
 
 @media (max-width: 768px) {
@@ -162,15 +161,17 @@
     text-align: right;
     padding: 12px 0;
     border-bottom: 1px solid #eee;
+    text-decoration: none;
   }
   
   .button, .user-button {
     width: 100%;
-    text-align: center;
+    text-align: right;
     padding: 12px;
     margin: 8px 0;
+    justify-content: center;
   }
-  
+
   .dropdown-menu {
     position: static;
     width: 100%;
@@ -194,4 +195,11 @@
   .button, .user-button, .dropdown-item {
     font-size: 14px;
   }
+}
+
+a{
+  margin-top: 4px;
+  text-decoration: none;
+  text-decoration-color: none;
+  color: black;
 }
