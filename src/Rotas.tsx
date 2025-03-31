@@ -4,6 +4,7 @@ import Home from './component/home/Home';
 import Login from './component/login/Login';
 import Register from './component/register/Register';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import RegisterProject from './component/registroProjeto/RegisterProject';
 
 function PrivatesRoutes(props: RouteProps){
 
@@ -42,6 +43,7 @@ const Rotas = () => {
         <Route path= "/" element={<Home />} />
         <Route path= "/login/*" element ={<Login/>} />
         <Route path= "/register" element ={<PrivatesRoutes><Register/></PrivatesRoutes>}/>
+        <Route path= "/registerproject" element={<PrivatesRoutes><RegisterProject/></PrivatesRoutes>}/>
       </Routes> 
     </div>
   )
