@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './RegisterProject.css'
 
-function App() {
+function RegisterProject() {
   const [formData, setFormData] = useState({
     categoria: '',
     etapa: '',
@@ -234,4 +234,4 @@ function App() {
   );
 }
 
-export default App;
+export default RegisterProject;
