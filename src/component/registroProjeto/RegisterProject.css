@@ -1,4 +1,4 @@
-.App {
+.App-form{
   text-align: center;
   padding: 20px;
 }
@@ -15,16 +15,23 @@
 
 .form-row {
   display: flex;
+  gap: 20px;
+  width: 100%;
+}
+
+.form-group {
+  flex: 1;
+  display: flex;
   flex-direction: column;
   margin-bottom: 15px;
 }
 
-.form-group {
-  width: 100%;
-  margin-right: 0;
-  margin-bottom: 15px;
-  display: flex;
-  flex-direction: column;
+.left-group {
+  flex: 2;
+}
+
+.right-group {
+  flex: 1;
 }
 
 .form-group:last-child {
@@ -37,7 +44,7 @@ label {
   font-weight: bold;
 }
 
-input,
+.input-form,
 select {
   width: 100%;
   padding: 8px;
@@ -63,7 +70,7 @@ textarea {
   background-color: #c5d3de;
 }
 
-button {
+.Button-project {
   padding: 10px 20px;
   background-color: #007bff;
   color: white;
@@ -71,54 +78,14 @@ button {
   border-radius: 4px;
   cursor: pointer;
   margin-top: 20px;
-  width: 100%;
+  width: auto;
 }
 
-button:hover {
+.Button-project:hover {
   background-color: #0056b3;
 }
 
-#warning {
-  margin-top: 5px;
-  font-size: 0.9em;
-}
-
-/* Media Queries para telas maiores */
-@media (min-width: 768px) {
-  .Formulario {
-    max-width: 90%;
-    padding: 20px;
-  }
-  
-  .form-row {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: stretch;
-  }
-  
-  .form-group {
-    flex: 1;
-    margin-right: 10px;
-    margin-bottom: 0;
-  }
-  
-  .form-group:last-child {
-    margin-right: 0;
-  }
-  
-  .form-group.left-group {
-    flex: 0 0 60%;
-  }
-  
-  .form-group.right-group {
-    flex: 0 0 40%;
-  }
-  
-  .form-group.data-group {
-    flex: 0 0 10%;
-  }
-  
-  button {
-    width: auto;
-  }
+.file-input{
+  width: auto;
+  background-color: #c5d3de;
 }
