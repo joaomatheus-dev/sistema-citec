@@ -1,5 +1,5 @@
 import React from 'react'
- import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 import Swal from 'sweetalert2';
 import './Login.css'
 
