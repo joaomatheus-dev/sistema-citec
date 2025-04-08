@@ -49,7 +49,7 @@ const Register = () => {
       });
 
       if (!password) {
-        return; // Usuário cancelou
+        return;
       }
 
       // Verifica a senha do usuário atual
