@@ -12,54 +12,17 @@ import { v4 as uuidv4 } from 'uuid';
 import './RegisterProject.css'
 
 function RegisterProject() {
-  const [formData, setFormData] = useState<IForm>({
-    idForm: uuidv4(),
-    titulo: '',
-    etapa: '',
-    categoriaProjeto: '',
-    dataInicio: '',
-    dataFim: '',
-    tipoPesquisa: '',
-    propriedadeIntelectual: '',
-    linkProjeto: '',
-    tipoLink: '',
-    descricaoProjeto: '',
-  });
-
+  const [tituloProjeto, setTituloProjeto] = useState<string>('')
+  const [etapaProjeto, setEtapaProjeto] = useState<string>('')
+  const [categoriaProjeto, setCategoriaProjeto] = useState<string>('')
+  const [dataInicio, setDataIncio] = useState<string>('')
+  const [dataFim, setDataFim] = useState<string>('')
+  const [tipoPesquisa, setTipoPesquisa] = useState<string>('')
+  const [propriedadeIntelectual, setPropriedadeIntelectual] = useState<string>('')
+  const [linkProjeto, setLinkProjeto] = useState<string>('')
+  const [tipoDeLink, setTipoDeLink] = useState<string>('')
+  const [descricaoProjeto, setDescricaoProjeto] = useState<string>('')
   const [file, setFile] = useState<File | null>(null);
-  const [warning, setWarning] = useState({ message: '', color: '' });
-  const navigate = useNavigate();
-
-  const handleChange = (e: React.ChangeEvent<
-    HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-  >) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-
-    if (name === 'descricaoProjeto') {
-      if (value.length === 550) {
-        setWarning({
-          message: 'Limite máximo de 550 caracteres atingido!',
-          color: 'red',
-        });
-      } else if (value.length >= 500 && value.length < 550) {
-        setWarning({
-          message: 'Você está próximo do limite máximo de 550 caracteres!',
-          color: 'orange',
-        });
-      } else if (value.length > 550) {
-        setWarning({
-          message: 'O limite máximo é de 550 caracteres',
-          color: 'red',
-        });
-      } else {
-        setWarning({ message: '', color: '' });
-      }
-    }
-  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -67,62 +30,10 @@ function RegisterProject() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    
-    Swal.fire({
-      title: 'Enviando...',
-      text: 'Por favor, aguarde enquanto salvamos seu projeto.',
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      }
-    });
-
-    try {
-      let fileUrl = '';
-      
-      if (file) {
-        const fileRef = ref(storage, `projectFiles/${formData.idForm}/${file.name}`);
-        await uploadBytes(fileRef, file);
-        fileUrl = await getDownloadURL(fileRef);
-      }
-
-      const formWithFile = {
-        ...formData,
-        fileUrl: fileUrl || 'Nenhum arquivo enviado',
-        createdAt: new Date().toISOString(),
-      };
-
-      await setDoc(doc(db, "projects", formData.idForm), formWithFile);
-
-      await Swal.fire({
-        title: 'Sucesso!',
-        text: 'Projeto cadastrado com sucesso!',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      });
-
-      navigate('/');
-
-    } catch (error) {
-      console.error('Erro ao enviar formulário:', error);
-
-      await Swal.fire({
-        title: 'Erro!',
-        text: 'Ocorreu um erro ao cadastrar o projeto. Tente novamente.',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
-    } finally {
-      Swal.close();
-    }
-  };
-
   return (
     <div className='background-login-register'>
       <div className="App-form">
-        <form className="Formulario" onSubmit={handleSubmit}>
+        <form className="Formulario">
           <h1>Cadastro de Projeto</h1>
           <div className="form-row">
             <div className="form-group left-group">
@@ -132,8 +43,8 @@ function RegisterProject() {
                   className='input-form'
                   type="text"
                   name="titulo"
-                  value={formData.titulo}
-                  onChange={handleChange}
+                  value={tituloProjeto}
+                  onChange={(event) => setTituloProjeto(event.target.value)}
                   required
                 />
               </label>
@@ -143,8 +54,8 @@ function RegisterProject() {
                 Etapa:
                 <select
                   name="etapa"
-                  value={formData.etapa}
-                  onChange={handleChange}
+                  value={etapaProjeto}
+                  onChange={(event) => setEtapaProjeto(event.target.value)}
                   required
                 >
                   <option value="" disabled hidden>
@@ -168,8 +79,8 @@ function RegisterProject() {
                 Categoria do projeto:
                 <select
                   name="categoriaProjeto"
-                  value={formData.categoriaProjeto}
-                  onChange={handleChange}
+                  value={categoriaProjeto}
+                  onChange={(event) => setCategoriaProjeto(event.target.value)}
                   required
                 >
                   <option value="" disabled hidden>
@@ -188,8 +99,8 @@ function RegisterProject() {
                   className='input-form'
                   type="date"
                   name="dataInicio"
-                  value={formData.dataInicio}
-                  onChange={handleChange}
+                  value={dataInicio}
+                  onChange={(event)=> setDataIncio(event.target.value)}
                   required
                 />
               </label>
@@ -201,8 +112,8 @@ function RegisterProject() {
                   className='input-form'
                   type="date"
                   name="dataFim"
-                  value={formData.dataFim}
-                  onChange={handleChange}
+                  value={dataFim}
+                  onChange={(event) => setDataFim(event.target.value)}
                   required
                 />
               </label>
@@ -214,8 +125,8 @@ function RegisterProject() {
                 Tipo de Pesquisa:
                 <select
                   name="tipoPesquisa"
-                  value={formData.tipoPesquisa}
-                  onChange={handleChange}
+                  value={tipoPesquisa}
+                  onChange={(event) => setTipoPesquisa(event.target.value)}
                   required
                 >
                   <option value="" disabled hidden>
@@ -234,8 +145,8 @@ function RegisterProject() {
                 Propriedade Intelectual:
                 <select
                   name="propriedadeIntelectual"
-                  value={formData.propriedadeIntelectual}
-                  onChange={handleChange}
+                  value={propriedadeIntelectual}
+                  onChange={(event) => setPropriedadeIntelectual(event.target.value)}
                   required
                 >
                   <option value="" disabled hidden>
@@ -256,8 +167,8 @@ function RegisterProject() {
                   className='input-form'
                   type="text"
                   name="linkProjeto"
-                  value={formData.linkProjeto}
-                  onChange={handleChange}
+                  value={linkProjeto}
+                  onChange={(event) => setLinkProjeto(event.target.value)}
                 />
               </label>
             </div>
@@ -266,8 +177,8 @@ function RegisterProject() {
                 Tipo de Link:
                 <select
                   name="tipoLink"
-                  value={formData.tipoLink}
-                  onChange={handleChange}
+                  value={tipoDeLink}
+                  onChange={(event) => setTipoDeLink(event.target.value)}
                   required
                 >
                   <option value="" disabled hidden>
@@ -287,15 +198,15 @@ function RegisterProject() {
                 <textarea
                   className='textArea-form'
                   name="descricaoProjeto"
-                  value={formData.descricaoProjeto}
-                  onChange={handleChange}
+                  value={descricaoProjeto}
+                  onChange={(event) => setDescricaoProjeto(event.target.value)}
                   maxLength={550}
                   rows={4}
                   required
                 />
-                <div id="warning" style={{ color: warning.color }}>
+{/*                 <div id="warning" style={{ color: warning.color }}>
                   {warning.message}
-                </div>
+                </div> */}
               </label>
             </div>
           </div>
