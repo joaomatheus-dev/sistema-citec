@@ -2,28 +2,33 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router'
 import Swal from 'sweetalert2';
 
-import { storage } from '../../config/firebase';
+import { db, storage } from '../../config/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { doc, setDoc } from 'firebase/firestore';
 
 import { IForm } from '../../models/Form';
 
+import { v4 as uuidv4 } from 'uuid';
 import './RegisterProject.css'
 
 function RegisterProject() {
-  const [formData, setFormData] = useState({
-    categoria: '',
-    etapa: '',
+  const [formData, setFormData] = useState<IForm>({
+    idForm: uuidv4(),
     titulo: '',
+    etapa: '',
+    categoriaProjeto: '',
     dataInicio: '',
     dataFim: '',
-    description: '',
     tipoPesquisa: '',
-    propriedade: '',
-    link: '',
+    propriedadeIntelectual: '',
+    linkProjeto: '',
     tipoLink: '',
+    descricaoProjeto: '',
   });
 
+  const [file, setFile] = useState<File | null>(null);
   const [warning, setWarning] = useState({ message: '', color: '' });
+  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<
     HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -34,7 +39,7 @@ function RegisterProject() {
       [name]: value,
     });
 
-    if (name === 'description') {
+    if (name === 'descricaoProjeto') {
       if (value.length === 550) {
         setWarning({
           message: 'Limite máximo de 550 caracteres atingido!',
@@ -56,10 +61,62 @@ function RegisterProject() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Dados do formulário:', formData);
-    alert('Formulário enviado com sucesso!');
+    
+    Swal.fire({
+      title: 'Enviando...',
+      text: 'Por favor, aguarde enquanto salvamos seu projeto.',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+
+    try {
+      let fileUrl = '';
+      
+      if (file) {
+        const fileRef = ref(storage, `projectFiles/${formData.idForm}/${file.name}`);
+        await uploadBytes(fileRef, file);
+        fileUrl = await getDownloadURL(fileRef);
+      }
+
+      const formWithFile = {
+        ...formData,
+        fileUrl: fileUrl || 'Nenhum arquivo enviado',
+        createdAt: new Date().toISOString(),
+      };
+
+      await setDoc(doc(db, "projects", formData.idForm), formWithFile);
+
+      await Swal.fire({
+        title: 'Sucesso!',
+        text: 'Projeto cadastrado com sucesso!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+
+      navigate('/');
+
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error);
+
+      await Swal.fire({
+        title: 'Erro!',
+        text: 'Ocorreu um erro ao cadastrar o projeto. Tente novamente.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    } finally {
+      Swal.close();
+    }
   };
 
   return (
@@ -110,8 +167,8 @@ function RegisterProject() {
               <label>
                 Categoria do projeto:
                 <select
-                  name="categoria"
-                  value={formData.categoria}
+                  name="categoriaProjeto"
+                  value={formData.categoriaProjeto}
                   onChange={handleChange}
                   required
                 >
@@ -176,8 +233,8 @@ function RegisterProject() {
               <label>
                 Propriedade Intelectual:
                 <select
-                  name="propriedade"
-                  value={formData.propriedade}
+                  name="propriedadeIntelectual"
+                  value={formData.propriedadeIntelectual}
                   onChange={handleChange}
                   required
                 >
@@ -198,8 +255,8 @@ function RegisterProject() {
                 <input
                   className='input-form'
                   type="text"
-                  name="link"
-                  value={formData.link}
+                  name="linkProjeto"
+                  value={formData.linkProjeto}
                   onChange={handleChange}
                 />
               </label>
@@ -229,8 +286,8 @@ function RegisterProject() {
                 Descrição Breve do Projeto:
                 <textarea
                   className='textArea-form'
-                  name="description"
-                  value={formData.description}
+                  name="descricaoProjeto"
+                  value={formData.descricaoProjeto}
                   onChange={handleChange}
                   maxLength={550}
                   rows={4}
@@ -242,19 +299,22 @@ function RegisterProject() {
               </label>
             </div>
           </div>
-        <label htmlFor="file-upload" className="file-input-label">
-          <span>
-            {'Selecione um arquivo PDF ou DOC'}
-          </span>
-          <div/>
-          <input
-            id="file-upload"
-            type="file"
-            accept=".pdf,.doc,.docx"
-            className="file-input"
-          />
-        </label>
-          <button className='Button-project' type="submit">Enviar</button>
+          <label htmlFor="file-upload" className="file-input-label">
+            <span>
+              {'Selecione um arquivo PDF ou DOC'}
+            </span>
+            <div/>
+            <input
+              id="file-upload"
+              type="file"
+              accept=".pdf,.doc,.docx"
+              className="file-input"
+              onChange={handleFileChange}
+            />
+          </label>
+          <button className='Button-project' type="submit">
+            Enviar
+          </button>
         </form>
       </div>
     </div>
