@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router'
 import Swal from 'sweetalert2';
 
 import { db, storage } from '../../config/firebase';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL, getStorage } from 'firebase/storage';
 import { doc, setDoc } from 'firebase/firestore';
 
 import { IForm } from '../../models/Form';
@@ -25,6 +25,32 @@ function RegisterProject() {
   const [tipoDeLink, setTipoDeLink] = useState<string>('')
   const [descricaoProjeto, setDescricaoProjeto] = useState<string>('')
   const [file, setFile] = useState<File | null>(null);
+
+  const [warning, setWarning] = useState({ message: '', color: '' });
+
+  const storage = getStorage();
+
+  function checkDescription(){
+    if(descricaoProjeto.length === 550){
+      setWarning({
+        message: 'Limite máximo de 550 caracteres atingido!',
+        color: 'red',
+      });
+    }else if(descricaoProjeto.length >= 500 && descricaoProjeto.length < 550){
+      setWarning({
+        message: 'Você está próximo do limite máximo de 550 caracteres!',
+        color: 'orange',
+      });
+    }else if (descricaoProjeto.length > 550) {
+      setWarning({
+        message: 'O limite máximo é de 550 caracteres',
+        color: 'red',
+      });
+    } else {
+      setWarning({ message: '', color: '' });
+    }
+  };
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -211,9 +237,9 @@ function RegisterProject() {
                   rows={4}
                   required
                 />
-{/*                 <div id="warning" style={{ color: warning.color }}>
+               <div id="warning" style={{ color: warning.color }}>
                   {warning.message}
-                </div> */}
+                </div>
               </label>
             </div>
           </div>
