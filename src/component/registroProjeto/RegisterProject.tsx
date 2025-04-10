@@ -8,7 +8,6 @@ import { doc, setDoc } from 'firebase/firestore';
 
 import { IForm } from '../../models/Form';
 
-import { v4 as uuidv4 } from 'uuid';
 import './RegisterProject.css'
 import { preProcessFile } from 'typescript';
 import { link } from 'fs';
@@ -63,6 +62,14 @@ function RegisterProject() {
   const handleSubmit= async (e: React.MouseEvent<HTMLButtonElement>) =>{
     e.preventDefault();
     
+    Swal.fire({
+      title: 'Enviando cadastro de projeto...',
+      text: 'Por favor, aguarde enquanto salvamos seu projeto.',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
     try{
 
     }catch{
