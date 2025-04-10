@@ -41,6 +41,7 @@ const Rotas = () => {
       <Routes>
         <Route path= "/" element={<Home />} />
         <Route path= "/login/*" element ={<Login/>} />
+        <Route path= "/projetos" />
         <Route path= "/register" element ={<PrivatesRoutes><Register/></PrivatesRoutes>}/>
         <Route path= "/registerproject" element={<PrivatesRoutes><RegisterProject/></PrivatesRoutes>}/>
       </Routes> 
