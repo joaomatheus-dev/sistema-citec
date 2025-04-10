@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 
 import { db, storage } from '../../config/firebase';
 import { ref, uploadBytes, getDownloadURL, getStorage } from 'firebase/storage';
-import { doc, setDoc } from 'firebase/firestore';
+import { collection, doc, setDoc } from 'firebase/firestore';
 
 import { IForm } from '../../models/Form';
 
@@ -69,9 +69,20 @@ function RegisterProject() {
       }
     });
     try{
+      let projetoID  = idProjeto
 
-    }catch{
+      if (projetoID === "")
+        projetoID = doc(collection(db,"Projetos")).id;
 
+    }catch(error){
+      await Swal.fire({
+        title: 'Erro!',
+        text: 'Ocorreu um erro ao cadastrar o projeto. Tente novamente.',
+        icon: 'error',
+        confirmButtonText: 'OK'
+      });
+    }finally{
+      Swal.close();
     }
   }
 
