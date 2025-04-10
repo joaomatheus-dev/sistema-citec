@@ -1,5 +1,5 @@
 export interface IForm{
-  idForm: string,
+  idProjeto: string,
   titulo: string,
   etapa: string,
   categoriaProjeto: string,
