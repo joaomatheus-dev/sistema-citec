@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router'
 import Swal from 'sweetalert2';
 
@@ -51,6 +51,9 @@ function RegisterProject() {
     }
   };
 
+  useEffect(() => {
+    checkDescription();
+  }, [descricaoProjeto]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
