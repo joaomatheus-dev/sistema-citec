@@ -13,7 +13,6 @@ function PrivatesRoutes(props: RouteProps){
 
   useEffect(()=>{
   const unsign = onAuthStateChanged(getAuth(), (user)=>{
-    console.log(user)
     if(user === null){
       setAuthenticated(false);
     }else{
