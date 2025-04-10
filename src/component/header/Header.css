@@ -27,6 +27,14 @@
   color: #555;
 }
 
+.navbar-divider{
+  width: 1px;
+  height: 25px;
+  margin: 0 0.5rem;
+  background-color:rgba(0, 0, 0, 0.3);
+  align-self: center;
+}
+
 .button {
   background-color: #084eb4;
   color: white;
