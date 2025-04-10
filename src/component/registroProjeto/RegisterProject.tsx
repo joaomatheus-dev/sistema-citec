@@ -175,7 +175,7 @@ function RegisterProject() {
             </div>
             <div className="form-group data-group">
               <label>
-                Data de Início:
+                Data de Início(M/D/A):
                 <input
                   className='input-form'
                   type="date"
@@ -188,7 +188,7 @@ function RegisterProject() {
             </div>
             <div className="form-group data-group">
               <label>
-                Data de Fim:
+                Data de Fim(M/D/A):
                 <input
                   className='input-form'
                   type="date"
