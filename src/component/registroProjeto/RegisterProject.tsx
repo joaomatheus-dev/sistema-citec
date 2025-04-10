@@ -31,6 +31,9 @@ function RegisterProject() {
   const navigate = useNavigate();
   const storage = getStorage();
 
+  const dataInicioBr = new Date(dataInicio).toLocaleDateString('pt-BR'); 
+  const dataFimBr = new Date(dataFim).toLocaleDateString('pt-BR');
+
   function checkDescription(){
     if(descricaoProjeto.length === 550){
       setWarning({
