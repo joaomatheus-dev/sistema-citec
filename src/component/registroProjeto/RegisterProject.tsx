@@ -28,7 +28,7 @@ function RegisterProject() {
   const [file, setFile] = useState<File | null>(null);
 
   const [warning, setWarning] = useState({ message: '', color: '' });
-
+  const navigate = useNavigate();
   const storage = getStorage();
 
   function checkDescription(){
@@ -41,11 +41,6 @@ function RegisterProject() {
       setWarning({
         message: 'Você está próximo do limite máximo de 550 caracteres!',
         color: 'orange',
-      });
-    }else if (descricaoProjeto.length > 550) {
-      setWarning({
-        message: 'O limite máximo é de 550 caracteres',
-        color: 'red',
       });
     } else {
       setWarning({ message: '', color: '' });
@@ -62,9 +57,14 @@ function RegisterProject() {
     }
   };
 
-  const handleSubmit= () =>{
-    console.log(tituloProjeto, etapaProjeto, categoriaProjeto, dataInicio, dataFim, tipoPesquisa, propriedadeIntelectual, linkProjeto, tipoDeLink, descricaoProjeto, file)
-    alert("Enviado com sucesso");
+  const handleSubmit= async (e: React.MouseEvent<HTMLButtonElement>) =>{
+    e.preventDefault();
+    
+    try{
+
+    }catch{
+
+    }
   }
 
   return (
