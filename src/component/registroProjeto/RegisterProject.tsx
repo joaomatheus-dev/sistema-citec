@@ -10,6 +10,8 @@ import { IForm } from '../../models/Form';
 
 import { v4 as uuidv4 } from 'uuid';
 import './RegisterProject.css'
+import { preProcessFile } from 'typescript';
+import { link } from 'fs';
 
 function RegisterProject() {
   const [tituloProjeto, setTituloProjeto] = useState<string>('')
@@ -29,6 +31,11 @@ function RegisterProject() {
       setFile(e.target.files[0]);
     }
   };
+
+  const handleSubmit= () =>{
+    console.log(tituloProjeto, etapaProjeto, categoriaProjeto, dataInicio, dataFim, tipoPesquisa, propriedadeIntelectual, linkProjeto, tipoDeLink, descricaoProjeto, file)
+    alert("Enviado com sucesso");
+  }
 
   return (
     <div className='background-login-register'>
@@ -223,7 +230,7 @@ function RegisterProject() {
               onChange={handleFileChange}
             />
           </label>
-          <button className='Button-project' type="submit">
+          <button className='Button-project' onClick={handleSubmit} type="submit">
             Enviar
           </button>
         </form>
