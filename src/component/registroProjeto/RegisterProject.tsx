@@ -9,8 +9,6 @@ import { doc, setDoc } from 'firebase/firestore';
 import { IForm } from '../../models/Form';
 
 import './RegisterProject.css'
-import { preProcessFile } from 'typescript';
-import { link } from 'fs';
 
 function RegisterProject() {
   const [idProjeto, setIDProjeto] = useState<string>("");
