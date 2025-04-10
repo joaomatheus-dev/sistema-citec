@@ -10,4 +10,5 @@ export interface IForm{
   linkProjeto: string,
   tipoLink: string,
   descricaoProjeto: string,
+  urlFile: string,
 }
