@@ -24,6 +24,7 @@ function RegisterProject() {
   const [tipoDeLink, setTipoDeLink] = useState<string>('')
   const [descricaoProjeto, setDescricaoProjeto] = useState<string>('')
   const [file, setFile] = useState<File | null>(null);
+  const [urlFile, setURLFile] = useState<string>("");
 
   const [warning, setWarning] = useState({ message: '', color: '' });
   const navigate = useNavigate();
@@ -74,6 +75,12 @@ function RegisterProject() {
 
       if (projetoID === "")
         projetoID = doc(collection(db,"Projetos")).id;
+
+      let urlFileStorage = urlFile;
+      if (file !== null){
+        const uploadSnapshot = await uploadBytes(ref(storage, "projetos/" +projetoID), file);
+        urlFileStorage = await getDownloadURL(uploadSnapshot.ref)
+      }
 
       let projeto: IForm = {
         idProjeto: projetoID,
