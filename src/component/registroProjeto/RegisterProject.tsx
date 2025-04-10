@@ -9,6 +9,7 @@ import { collection, doc, setDoc } from 'firebase/firestore';
 import { IForm } from '../../models/Form';
 
 import './RegisterProject.css'
+import { link } from 'fs';
 
 function RegisterProject() {
   const [idProjeto, setIDProjeto] = useState<string>("");
@@ -74,6 +75,24 @@ function RegisterProject() {
       if (projetoID === "")
         projetoID = doc(collection(db,"Projetos")).id;
 
+      let projeto: IForm = {
+        idProjeto: projetoID,
+        titulo: tituloProjeto,
+        etapa: etapaProjeto,
+        categoriaProjeto: categoriaProjeto,
+        dataInicio: dataInicioBr,
+        dataFim: dataFimBr,
+        tipoPesquisa: tipoPesquisa,
+        propriedadeIntelectual: propriedadeIntelectual,
+        linkProjeto: linkProjeto,
+        tipoLink: tipoDeLink,
+        descricaoProjeto: descricaoProjeto,
+        urlFile: urlFileStorage,
+      }
+
+
+      await setDoc(doc(db, "projetos", projetoID), projeto, {merge : true})
+      navigate('/projetos')
     }catch(error){
       await Swal.fire({
         title: 'Erro!',
