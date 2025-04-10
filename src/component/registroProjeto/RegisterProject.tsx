@@ -14,6 +14,7 @@ import { preProcessFile } from 'typescript';
 import { link } from 'fs';
 
 function RegisterProject() {
+  const [idProjeto, setIDProjeto] = useState<string>("");
   const [tituloProjeto, setTituloProjeto] = useState<string>('')
   const [etapaProjeto, setEtapaProjeto] = useState<string>('')
   const [categoriaProjeto, setCategoriaProjeto] = useState<string>('')
