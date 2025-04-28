@@ -58,7 +58,7 @@ function RegisterProject() {
     }
   };
 
-  const handleSubmit= async (e: React.MouseEvent<HTMLButtonElement>) =>{
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     Swal.fire({
@@ -69,19 +69,35 @@ function RegisterProject() {
         Swal.showLoading();
       }
     });
-    try{
-      let projetoID  = idProjeto
-
-      if (projetoID === "")
-        projetoID = doc(collection(db,"Projetos")).id;
-
+  
+    try {
+      const projetoRef = doc(collection(db, "projetos"));
+      const projetoID = idProjeto || projetoRef.id;
+  
       let urlFileStorage = urlFile;
-      if (file !== null){
-        const uploadSnapshot = await uploadBytes(ref(storage, "projetos/" +projetoID), file);
-        urlFileStorage = await getDownloadURL(uploadSnapshot.ref)
-      }
+      
+      if (file) {
 
-      let projeto: IForm = {
+        const base64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve((reader.result as string).split(',')[1]);
+          reader.onerror = error => reject(error);
+          reader.readAsDataURL(file);
+        });
+        const apiResponse = await fetch('http://localhost:3333/base64-to-pdf', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            base64: base64,
+            filename: file.name
+          })
+        });
+  
+        const result = await apiResponse.json();
+        urlFileStorage = "";
+      }
+  
+      const projetoData: IForm = {
         idProjeto: projetoID,
         titulo: tituloProjeto,
         etapa: etapaProjeto,
@@ -94,27 +110,34 @@ function RegisterProject() {
         tipoLink: tipoDeLink,
         descricaoProjeto: descricaoProjeto,
         urlFile: urlFileStorage,
-      }
+      };
 
-
-      await setDoc(doc(db, "projetos", projetoID), projeto, {merge : true})
-      navigate('/projetos')
-    }catch(error){
+      await setDoc(projetoRef, projetoData);
+  
+      Swal.fire({
+        title: 'Sucesso!',
+        text: 'Projeto cadastrado com sucesso!',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      }).then(() => {
+        navigate('/projetos');
+      });
+      
+    } catch (error) {
+      console.error('Erro ao cadastrar projeto:', error);
       await Swal.fire({
         title: 'Erro!',
         text: 'Ocorreu um erro ao cadastrar o projeto. Tente novamente.',
         icon: 'error',
         confirmButtonText: 'OK'
       });
-    }finally{
-      Swal.close();
     }
-  }
+  };
 
   return (
     <div className='background-login-register'>
       <div className="App-form">
-        <form className="Formulario">
+        <form className="Formulario" onSubmit={handleSubmit}>
           <h1>Cadastro de Projeto</h1>
           <div className="form-row">
             <div className="form-group left-group">
@@ -304,7 +327,7 @@ function RegisterProject() {
               onChange={handleFileChange}
             />
           </label>
-          <button className='Button-project' onClick={handleSubmit} type="submit">
+          <button className='Button-project' type="submit">
             Enviar
           </button>
         </form>
