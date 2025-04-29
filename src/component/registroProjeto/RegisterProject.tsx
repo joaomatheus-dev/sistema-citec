@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router'
 import Swal from 'sweetalert2';
 
 import { db, storage } from '../../config/firebase';
-import { ref, uploadBytes, getDownloadURL, getStorage } from 'firebase/storage';
 import { collection, doc, setDoc } from 'firebase/firestore';
 
 import { IForm } from '../../models/Form';
@@ -27,7 +26,6 @@ function RegisterProject() {
 
   const [warning, setWarning] = useState({ message: '', color: '' });
   const navigate = useNavigate();
-  const storage = getStorage();
 
   const dataInicioBr = new Date(dataInicio).toLocaleDateString('pt-BR'); 
   const dataFimBr = new Date(dataFim).toLocaleDateString('pt-BR');
