@@ -94,7 +94,7 @@ function RegisterProject() {
         });
   
         const result = await apiResponse.json();
-        urlFileStorage = "";
+        urlFileStorage = `/upload/${projetoID}/${file.name}`;
       }
   
       const projetoData: IForm = {
