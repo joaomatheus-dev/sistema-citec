@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router'
 import Swal from 'sweetalert2';
 
-import { db, storage } from '../../config/firebase';
+import { db } from '../../config/firebase';
 import { collection, doc, setDoc } from 'firebase/firestore';
 
 import { IForm } from '../../models/Form';
