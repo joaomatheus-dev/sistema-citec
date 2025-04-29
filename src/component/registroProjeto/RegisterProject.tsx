@@ -86,13 +86,14 @@ function RegisterProject() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            projetoID: projetoID,
             base64: base64,
             filename: file.name
           })
         });
   
         const result = await apiResponse.json();
-        urlFileStorage = `/upload/${projetoID}/${file.name}`;
+        urlFileStorage = `/uploads/${projetoID}/${file.name}`;
       }
   
       const projetoData: IForm = {
