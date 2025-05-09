@@ -1,6 +1,6 @@
 import React from 'react'
 
-const agendamento = () => {
+const Agendamento = () => {
   return (
     <div>
       <h1>Teste</h1>
@@ -8,4 +8,4 @@ const agendamento = () => {
   )
 }
 
-export default agendamento
+export default Agendamento
