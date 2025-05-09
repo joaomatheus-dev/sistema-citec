@@ -22,6 +22,7 @@ function RegisterProject() {
   const [tipoDeLink, setTipoDeLink] = useState<string>('')
   const [descricaoProjeto, setDescricaoProjeto] = useState<string>('')
   const [file, setFile] = useState<File | null>(null);
+  const [images, setImages] = useState<File[]>([]); 
   const [urlFile, setURLFile] = useState<string>("");
 
   const [warning, setWarning] = useState({ message: '', color: '' });
@@ -53,6 +54,13 @@ function RegisterProject() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
+    }
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const filesArray = Array.from(e.target.files);
+      setImages(filesArray);
     }
   };
 
@@ -324,6 +332,16 @@ function RegisterProject() {
               accept=".pdf,.doc,.docx"
               className="file-input"
               onChange={handleFileChange}
+              required
+            />
+            <input
+              id="image-upload"
+              type="file"
+              accept=".jpeg, .png, .jpg"
+              className="image-input"
+              onChange={handleImageChange}
+              multiple
+              required
             />
           </label>
           <button className='Button-project' type="submit">
