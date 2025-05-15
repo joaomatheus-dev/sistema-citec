@@ -4,8 +4,10 @@ import Home from './component/home/Home';
 import Login from './component/login/Login';
 import Register from './component/register/Register';
 import Projects from './component/projetos/Projects';
+import Agendamento from './component/agendamento/Agendamento';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import RegisterProject from './component/registroProjeto/RegisterProject';
+import EditarProjeto from './component/editarProjeto/EditarProjeto';
 
 function PrivatesRoutes(props: RouteProps){
 
@@ -40,11 +42,13 @@ const Rotas = () => {
   return (
     <div>
       <Routes>
-        <Route path= "/" element={<Home />} />
-        <Route path= "/login/*" element ={<Login/>} />
+        <Route path= "/*" element={<Home />} />
+        <Route path= "/login/" element ={<Login/>} />
         <Route path= "/projetos" element ={<Projects/>}/>
         <Route path= "/register" element ={<PrivatesRoutes><Register/></PrivatesRoutes>}/>
         <Route path= "/registerproject" element={<PrivatesRoutes><RegisterProject/></PrivatesRoutes>}/>
+        <Route path='/editarprojeto/:id' element={<PrivatesRoutes><EditarProjeto/></PrivatesRoutes>}/>
+        <Route path = "/agendamento" element={<Agendamento/>} />
       </Routes> 
     </div>
   )
