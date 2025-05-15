@@ -172,14 +172,14 @@ function RegisterProject() {
                   <option value="" disabled hidden>
                     Selecione...
                   </option>
-                  <option value="emPlanejamento">Projeto em Planejamento</option>
-                  <option value="emDesenvolvimento">Em Desenvolvimento</option>
-                  <option value="emPublicacao">Em Publicação</option>
-                  <option value="esperandoRegistro">
+                  <option value="Em Planejamento">Projeto em Planejamento</option>
+                  <option value="Em Desenvolvimento">Em Desenvolvimento</option>
+                  <option value="Em Publicação">Em Publicação</option>
+                  <option value="Esperando Registro">
                     Aguardando Registro de Software
                   </option>
-                  <option value="concluido">Concluído</option>
-                  <option value="cancelado">Cancelado</option>
+                  <option value="Concluído">Concluído</option>
+                  <option value="Cancelado">Cancelado</option>
                 </select>
               </label>
             </div>
@@ -263,9 +263,9 @@ function RegisterProject() {
                   <option value="" disabled hidden>
                     Selecione...
                   </option>
-                  <option value="desenhoIndustrial">Desenho Industrial</option>
-                  <option value="registroSoftware">Registro de Software</option>
-                  <option value="patente">Patente</option>
+                  <option value="Desenho Industrial">Desenho Industrial</option>
+                  <option value="Registro de Software">Registro de Software</option>
+                  <option value="Patente">Patente</option>
                 </select>
               </label>
             </div>
@@ -295,9 +295,9 @@ function RegisterProject() {
                   <option value="" disabled hidden>
                     Selecione...
                   </option>
-                  <option value="paginaWeb">Página Web</option>
-                  <option value="appStore">Aplicativo</option>
-                  <option value="outro">Outro</option>
+                  <option value="Página Web">Página Web</option>
+                  <option value="Aplicativo">Aplicativo</option>
+                  <option value="Outro">Outro</option>
                 </select>
               </label>
             </div>
@@ -334,7 +334,7 @@ function RegisterProject() {
               onChange={handleFileChange}
               required
             />
-            <input
+{/*             <input
               id="image-upload"
               type="file"
               accept=".jpeg, .png, .jpg"
@@ -342,7 +342,7 @@ function RegisterProject() {
               onChange={handleImageChange}
               multiple
               required
-            />
+            /> */}
           </label>
           <button className='Button-project' type="submit">
             Enviar
