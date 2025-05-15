@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import { db } from '../../config/firebase';
 import { useNavigate } from 'react-router'
-import { collection, getDocs, query, QueryDocumentSnapshot, DocumentData } from 'firebase/firestore';
+import { collection, getDocs, query } from 'firebase/firestore';
 
 import './Projects.css';
 
