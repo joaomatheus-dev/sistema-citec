@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Header.css';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { getAuth, onAuthStateChanged, signOut } from 'firebase/auth';
 import Swal from 'sweetalert2';
 
@@ -9,6 +9,7 @@ const Header = () => {
   const [loading, setLoading] = useState(true);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const auth = getAuth();
@@ -65,6 +66,10 @@ const Header = () => {
     return <div className="navbar">Carregando...</div>;
   }
 
+    const handleRegisterButton = () => {
+    navigate('/registerproject/');
+  }
+
   return (
     <nav className='navbar'>
       <button className="mobile-menu-button" onClick={toggleMobileMenu}>
@@ -86,6 +91,7 @@ const Header = () => {
             </button>
             {dropdownOpen && (
               <div className="dropdown-menu">
+                <button className='dropdown-item-register' onClick={handleRegisterButton}>Registrar Projeto</button>
                 <button className="dropdown-item logout-button" onClick={handleLogout}>
                   Sair
                 </button>
