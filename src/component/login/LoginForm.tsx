@@ -5,7 +5,6 @@ import './Login.css'
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-
 const LoginForm = () => {
   const navigate = useNavigate();
 
