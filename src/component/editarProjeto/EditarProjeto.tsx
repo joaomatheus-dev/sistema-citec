@@ -3,76 +3,70 @@ import { useNavigate, useParams } from 'react-router'
 import Swal from 'sweetalert2';
 
 import { db } from '../../config/firebase';
-import { collection, doc, setDoc, getDoc , query } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 import { IForm } from '../../models/Form';
 
-const EditarProjeto = () => {
-  const { id } = useParams<{ id: string}>();
-  const [idProjeto] = useState<string>("");
-  const [tituloProjeto, setTituloProjeto] = useState<string>('')
-  const [etapaProjeto, setEtapaProjeto] = useState<string>('')
-  const [categoriaProjeto, setCategoriaProjeto] = useState<string>('')
-  const [dataInicio, setDataIncio] = useState<string>('')
-  const [dataFim, setDataFim] = useState<string>('')
-  const [tipoPesquisa, setTipoPesquisa] = useState<string>('')
-  const [propriedadeIntelectual, setPropriedadeIntelectual] = useState<string>('')
-  const [linkProjeto, setLinkProjeto] = useState<string>('')
-  const [tipoDeLink, setTipoDeLink] = useState<string>('')
-  const [descricaoProjeto, setDescricaoProjeto] = useState<string>('')
-  const [file] = useState<File | null>(null);
-  const [ undefined , setImages] = useState<File[]>([]); 
-  const [urlFile] = useState<string>("");
+const API_BASE = 'http://localhost:3333';
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+const EditarProjeto = () => {
+  const { id } = useParams<{ id: string }>();
+  
+  const [tituloProjeto, setTituloProjeto] = useState<string>('');
+  const [etapaProjeto, setEtapaProjeto] = useState<string>('');
+  const [categoriaProjeto, setCategoriaProjeto] = useState<string>('');
+  const [dataInicio, setDataIncio] = useState<string>('');
+  const [dataFim, setDataFim] = useState<string>('');
+  const [tipoPesquisa, setTipoPesquisa] = useState<string>('');
+  const [propriedadeIntelectual, setPropriedadeIntelectual] = useState<string>('');
+  const [linkProjeto, setLinkProjeto] = useState<string>('');
+  const [tipoDeLink, setTipoDeLink] = useState<string>('');
+  const [descricaoProjeto, setDescricaoProjeto] = useState<string>('');
+  const [file, setFile] = useState<File | null>(null);
+  const [urlFile, setUrlFile] = useState<string>('');
 
   const [warning, setWarning] = useState({ message: '', color: '' });
   const navigate = useNavigate();
 
-  const dataInicioBr = new Date(dataInicio).toLocaleDateString('pt-BR'); 
-  const dataFimBr = new Date(dataFim).toLocaleDateString('pt-BR');
-
   const fetchProjeto = async () => {
-  if (!id) return;
-  try {
-    const docRef = doc(db, "projetos", id);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      const data = docSnap.data();
-      setTituloProjeto(data.titulo || '');
-      setEtapaProjeto(data.etapa || '');
-      setCategoriaProjeto(data.categoriaProjeto || '');
-      setDataIncio(data.dataInicio || '');
-      setDataFim(data.dataFim || '');
-      setTipoPesquisa(data.tipoPesquisa || '');
-      setPropriedadeIntelectual(data.propriedadeIntelectual || '');
-      setLinkProjeto(data.linkProjeto || '');
-      setTipoDeLink(data.tipoLink || '');
-      setDescricaoProjeto(data.descricaoProjeto || '');
+    if (!id) return;
+    try {
+      const docRef = doc(db, "projetos", id);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setTituloProjeto(data.titulo || '');
+        setEtapaProjeto(data.etapa || '');
+        setCategoriaProjeto(data.categoriaProjeto || '');
+        setDataIncio(data.dataInicio || '');
+        setDataFim(data.dataFim || '');
+        setTipoPesquisa(data.tipoPesquisa || '');
+        setPropriedadeIntelectual(data.propriedadeIntelectual || '');
+        setLinkProjeto(data.linkProjeto || '');
+        setTipoDeLink(data.tipoLink || '');
+        setDescricaoProjeto(data.descricaoProjeto || '');
+        setUrlFile(data.urlFile || '');
+      }
+    } catch (error) {
+      console.error('Erro ao buscar dados do projeto:', error);
     }
-  } catch (error) {
-    setError('Erro ao buscar dados do projeto.');
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
-useEffect(() => {
-  fetchProjeto();
-}, [id]); 
+  useEffect(() => {
+    fetchProjeto();
+  }, [id]);
 
-  function checkDescription(){
-    if(descricaoProjeto.length === 550){
-      setWarning({
-        message: 'Limite máximo de 550 caracteres atingido!',
-        color: 'red',
-      });
-    }else if(descricaoProjeto.length >= 500 && descricaoProjeto.length < 550){
-      setWarning({
-        message: 'Você está próximo do limite máximo de 550 caracteres!',
-        color: 'orange',
-      });
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const checkDescription = () => {
+    if (descricaoProjeto.length === 550) {
+      setWarning({ message: 'Limite máximo de 550 caracteres atingido!', color: 'red' });
+    } else if (descricaoProjeto.length >= 500) {
+      setWarning({ message: 'Você está próximo do limite máximo de 550 caracteres!', color: 'orange' });
     } else {
       setWarning({ message: '', color: '' });
     }
@@ -82,100 +76,88 @@ useEffect(() => {
     checkDescription();
   }, [descricaoProjeto]);
 
-/*   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFile(e.target.files[0]);
-    }
-  }; */
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      const filesArray = Array.from(e.target.files);
-      setImages(filesArray);
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    Swal.fire({
-      title: 'Enviando cadastro de projeto...',
-      text: 'Por favor, aguarde enquanto salvamos seu projeto.',
-      allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      }
-    });
-  
-    try {
-      const projetoRef = doc(collection(db, "projetos"));
-      const projetoID = idProjeto || projetoRef.id;
-  
-      let urlFileStorage = urlFile;
-      
-      if (file) {
 
+    Swal.fire({
+      title: 'Salvando...',
+      text: 'Por favor, aguarde.',
+      allowOutsideClick: false,
+      didOpen: () => Swal.showLoading(),
+    });
+
+    try {
+      const projetoID = id || '';
+      let urlFileStorage = urlFile;
+
+      if (file) {
         const base64 = await new Promise<string>((resolve, reject) => {
           const reader = new FileReader();
           reader.onload = () => resolve((reader.result as string).split(',')[1]);
           reader.onerror = error => reject(error);
           reader.readAsDataURL(file);
         });
-        const apiResponse = await fetch('http://localhost:3333/base64-to-pdf', {
-          method: 'POST',
+
+        const metodo = urlFile ? 'PUT' : 'POST';
+
+        const apiResponse = await fetch(`${API_BASE}/base64-to-pdf`, {
+          method: metodo,
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             projetoID: projetoID,
             base64: base64,
-            filename: file.name
-          })
+            filename: file.name,
+          }),
         });
-  
+
+        if (!apiResponse.ok) throw new Error('Erro no upload do arquivo.');
+
         const result = await apiResponse.json();
-        urlFileStorage = `/uploads/${projetoID}/${file.name}`;
+        urlFileStorage = result.path;
       }
-  
+
       const projetoData: IForm = {
         idProjeto: projetoID,
         titulo: tituloProjeto,
         etapa: etapaProjeto,
         categoriaProjeto: categoriaProjeto,
-        dataInicio: dataInicioBr,
-        dataFim: dataFimBr,
+        dataInicio: dataInicio,
+        dataFim: dataFim,
         tipoPesquisa: tipoPesquisa,
         propriedadeIntelectual: propriedadeIntelectual,
         linkProjeto: linkProjeto,
         tipoLink: tipoDeLink,
         descricaoProjeto: descricaoProjeto,
         urlFile: urlFileStorage,
+        timestamp: Date.now(),
       };
 
-      await setDoc(projetoRef, projetoData);
-  
-      Swal.fire({
-        title: 'Sucesso!',
-        text: 'Projeto cadastrado com sucesso!',
-        icon: 'success',
-        confirmButtonText: 'OK'
-      }).then(() => {
+      await setDoc(doc(db, 'projetos', projetoID), projetoData);
+
+      Swal.fire('Sucesso!', 'Projeto atualizado com sucesso.', 'success').then(() => {
         navigate('/projetos');
       });
-      
+
     } catch (error) {
-      console.error('Erro ao cadastrar projeto:', error);
-      await Swal.fire({
-        title: 'Erro!',
-        text: 'Ocorreu um erro ao cadastrar o projeto. Tente novamente.',
-        icon: 'error',
-        confirmButtonText: 'OK'
-      });
+      console.error('Erro ao atualizar projeto:', error);
+      Swal.fire('Erro!', 'Não foi possível atualizar o projeto.', 'error');
     }
   };
+
+  const handleDownload = () => {
+    if (urlFile) {
+      const url = `${API_BASE}${urlFile.replace('/uploads', '/download')}`;
+      window.open(url, '_blank');
+    } else {
+      Swal.fire('Atenção', 'Nenhum arquivo disponível para download.', 'info');
+    }
+  };
+
   return (
   <div className='background-login-register'>
         <div className="App-form">
           <form className="Formulario" onSubmit={handleSubmit}>
-            <h1>Editar projeto {id}</h1>
+            <h1>Editar projeto {tituloProjeto}</h1>
             <div className="form-row">
               <div className="form-group left-group">
                 <label>
@@ -353,7 +335,7 @@ useEffect(() => {
             </div>
             <label htmlFor="file-upload" className="file-input-label">
               <span>
-                {'Selecione um arquivo PDF ou DOC'}
+                {'Selecione um arquivo PDF ou DOC Para editar o projeto.(Caso não vá fazer mudanças no arquivo baixe o arquivo atual e reupload ele)'}
               </span>
               <div/>
               <input
@@ -365,6 +347,12 @@ useEffect(() => {
                 required
               />
             </label>
+            {urlFile && (
+              <button type="button" onClick={handleDownload} className='Button-project'>
+                Download do Arquivo Atual
+              </button>
+            )}
+
             <button className='Button-project' type="submit">
               Enviar
             </button>
