@@ -22,8 +22,8 @@ function RegisterProject() {
   const [tipoDeLink, setTipoDeLink] = useState<string>('')
   const [descricaoProjeto, setDescricaoProjeto] = useState<string>('')
   const [file, setFile] = useState<File | null>(null);
-  const [images, setImages] = useState<File[]>([]); 
-  const [urlFile, setURLFile] = useState<string>("");
+/*   const [images, setImages] = useState<File[]>([]);  */
+  const [urlFile] = useState<string>("");
 
   const [warning, setWarning] = useState({ message: '', color: '' });
   const navigate = useNavigate();
@@ -57,12 +57,12 @@ function RegisterProject() {
     }
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+/*   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const filesArray = Array.from(e.target.files);
       setImages(filesArray);
     }
-  };
+  }; */
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
