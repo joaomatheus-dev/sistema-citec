@@ -76,7 +76,7 @@ const EditarProjeto = () => {
     checkDescription();
   }, [descricaoProjeto]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     Swal.fire({
@@ -98,19 +98,21 @@ const EditarProjeto = () => {
           reader.readAsDataURL(file);
         });
 
-        const metodo = urlFile ? 'PUT' : 'POST';
-
         const apiResponse = await fetch(`${API_BASE}/base64-to-pdf`, {
-          method: metodo,
+          method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            projetoID: projetoID,
-            base64: base64,
+            projetoID,
+            base64,
             filename: file.name,
           }),
         });
 
-        if (!apiResponse.ok) throw new Error('Erro no upload do arquivo.');
+        if (!apiResponse.ok) {
+          const errorText = await apiResponse.text();
+          console.error('Erro no upload do arquivo:', errorText);
+          throw new Error(`Erro no upload do arquivo: ${errorText}`);
+        }
 
         const result = await apiResponse.json();
         urlFileStorage = result.path;
@@ -343,8 +345,7 @@ const EditarProjeto = () => {
                 type="file"
                 accept=".pdf,.doc,.docx"
                 className="file-input"
-              /* onChange={handleFileChange} */
-                required
+                onChange={handleFileChange}
               />
             </label>
             {urlFile && (
