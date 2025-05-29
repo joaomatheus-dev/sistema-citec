@@ -106,14 +106,15 @@ function RegisterProject() {
       titulo: tituloProjeto,
       etapa: etapaProjeto,
       categoriaProjeto: categoriaProjeto,
-      dataInicio: dataInicio, // <-- Salva diretamente no formato YYYY-MM-DD
-      dataFim: dataFim,       // <-- Mesmo formato do input
+      dataInicio: dataInicio,
+      dataFim: dataFim,
       tipoPesquisa: tipoPesquisa,
       propriedadeIntelectual: propriedadeIntelectual,
       linkProjeto: linkProjeto,
       tipoLink: tipoDeLink,
       descricaoProjeto: descricaoProjeto,
       urlFile: urlFileStorage,
+      timestamp: Date.now(),
     };
 
     await setDoc(projetoRef, projetoData);
