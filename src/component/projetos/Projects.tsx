@@ -12,12 +12,42 @@ function Projects() {
     descricaoProjeto?: string;
     etapa?: string;
     timestamp?: number;
+    urlFile?: string;
   }[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [user, setUser] = useState<User | null>(null); // para tipar o user corretamente
+  const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
   const auth = getAuth();
+
+  const getFilenameFromUrl = (urlFile: string) => {
+    return urlFile.substring(urlFile.lastIndexOf('/') + 1);
+  };
+
+  const handleDownload = async (projetoID: string, filename: string) => {
+    try {
+      const response = await fetch(`/download/${projetoID}/${filename}`);
+
+      if (!response.ok) {
+        throw new Error('Erro ao baixar arquivo');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error(error);
+      alert('Falha ao baixar arquivo');
+    }
+  };
 
   const fetchDocuments = async () => {
     setLoading(true);
@@ -60,20 +90,28 @@ function Projects() {
 
   return (
     <div>
-      {documents.map((doc) => (
-        <div key={doc.id} className="div-container">
-          <h1 className="header-row">{doc.titulo || 'Sem título'}</h1>
-          <h2>{doc.etapa || 'Sem etapa'}</h2>
-          <p>{doc.descricaoProjeto || 'Sem descrição'}</p>
+      {documents.map((doc) => {
+        const filename = doc.urlFile ? getFilenameFromUrl(doc.urlFile) : null;
+        return (
+          <div key={doc.id} className="div-container">
+            <h1 className="header-row">{doc.titulo || 'Sem título'}</h1>
+            <h2>{doc.etapa || 'Sem etapa'}</h2>
+            <p>{doc.descricaoProjeto || 'Sem descrição'}</p>
 
-          {user && (
-            <>
-              <button onClick={() => handleEdit(doc.id)}>Editar</button>
-              <button className="button-delete">Deletar</button>
-            </>
-          )}
-        </div>
-      ))}
+            {user && (
+              <>
+                <button onClick={() => handleEdit(doc.id)}>Editar</button>
+                {filename && (
+                  <button onClick={() => handleDownload(doc.id, filename)}>
+                    Download Doc do Projeto
+                  </button>
+                )}
+                <button className="button-delete">Deletar</button>
+              </>
+            )}
+          </div>
+        );
+      })}
       {loading && <div>Carregando...</div>}
     </div>
   );
