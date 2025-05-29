@@ -330,7 +330,6 @@ function RegisterProject() {
               accept=".pdf,.doc,.docx"
               className="file-input"
               onChange={handleFileChange}
-              required
             />
 {/*             <input
               id="image-upload"
@@ -342,6 +341,21 @@ function RegisterProject() {
               required
             /> */}
           </label>
+          <label>
+                Observações adicionais:
+                <textarea
+                  className='textArea-form'
+                  name="observacoes"
+                  value={descricaoProjeto}
+                  onChange={(event) => setDescricaoProjeto(event.target.value)}
+                  maxLength={550}
+                  rows={4}
+                  required
+                />
+               <div id="warning" style={{ color: warning.color }}>
+                  {warning.message}
+                </div>
+              </label>
           <button className='Button-project' type="submit">
             Enviar
           </button>

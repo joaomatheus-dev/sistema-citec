@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../config/firebase';
 import { useNavigate } from 'react-router';
-import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, doc, deleteDoc } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import './Projects.css';
 
@@ -48,6 +48,34 @@ function Projects() {
       alert('Falha ao baixar arquivo');
     }
   };
+
+    
+    const handleDelete = async (projetoID: string, urlFile?: string) => {
+      if (!window.confirm('Tem certeza que deseja deletar este projeto e seu arquivo?')) return;
+
+      try {
+        // Deleta o documento do Firestore
+        await deleteDoc(doc(db, 'projetos', projetoID));
+
+        // Deleta o arquivo na API se existir
+        if (urlFile) {
+          const filename = getFilenameFromUrl(urlFile);
+          const response = await fetch(`http://localhost:3333/delete-file/${projetoID}/${filename}`, {
+            method: 'DELETE',
+          });
+
+          if (!response.ok) {
+            throw new Error('Erro ao deletar arquivo na API');
+          }
+        }
+
+        alert('Projeto e arquivo deletados com sucesso!');
+        fetchDocuments(); // Atualiza a lista de projetos
+      } catch (error) {
+        console.error(error);
+        alert('Falha ao deletar projeto e arquivo.');
+      }
+    };
 
   const fetchDocuments = async () => {
     setLoading(true);
@@ -106,7 +134,7 @@ function Projects() {
                     Download Doc do Projeto
                   </button>
                 )}
-                <button className="button-delete">Deletar</button>
+                <button className="button-delete" onClick={() => handleDelete(doc.id, doc.urlFile)}>Deletar</button>
               </>
             )}
           </div>
