@@ -15,5 +15,6 @@ export interface IForm{
   curso:string;
   orientador:string;
   aluno:string;
-  desenvolvedor:string;
+  desenvolvedor?:string;
+  observacoes?:string;
 }
