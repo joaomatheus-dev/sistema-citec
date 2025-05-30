@@ -12,4 +12,8 @@ export interface IForm{
   descricaoProjeto: string,
   urlFile: string,
   timestamp: number;
+  curso:string;
+  orientador:string;
+  aluno:string;
+  desenvolvedor:string;
 }
