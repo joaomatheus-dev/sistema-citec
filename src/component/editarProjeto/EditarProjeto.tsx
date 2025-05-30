@@ -409,7 +409,6 @@ const EditarProjeto = () => {
                   onChange={(event) => setObservacoes(event.target.value)}
                   maxLength={550}
                   rows={4}
-                  required
                 /> 
                <div id="warning" style={{ color: warning.color }}>
                   {warning.message}
