@@ -26,23 +26,21 @@ function Projects() {
 
   const handleDownload = async (projetoID: string, filename: string) => {
     try {
-      const response = await fetch(`/download/${projetoID}/${filename}`);
+      const response = await fetch(`http://localhost:3333/download/${projetoID}/${filename}`);
 
       if (!response.ok) {
         throw new Error('Erro ao baixar arquivo');
       }
 
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(blob);
+      const data = await response.json();
 
       const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', filename);
+      link.href = data.base64;
+      link.setAttribute('download', data.filename);
       document.body.appendChild(link);
       link.click();
-      link.remove();
+      document.body.removeChild(link);
 
-      window.URL.revokeObjectURL(url);
     } catch (error) {
       console.error(error);
       alert('Falha ao baixar arquivo');
