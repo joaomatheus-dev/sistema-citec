@@ -24,6 +24,11 @@ function RegisterProject() {
   const [file, setFile] = useState<File | null>(null);
 /*   const [images, setImages] = useState<File[]>([]);  */
   const [urlFile] = useState<string>("");
+  const [curso, setCurso] = useState<string>('');
+  const [orientador, setOrientador] = useState<string>('');
+  const [aluno, setAluno] = useState<string>('');
+  const [desenvolvedor, setDesenvolvedor] = useState<string>('');
+  const [observacoes, setObservacoes] = useState<string>('');
 
   const [warning, setWarning] = useState({ message: '', color: '' });
   const navigate = useNavigate();
@@ -115,6 +120,11 @@ function RegisterProject() {
       descricaoProjeto: descricaoProjeto,
       urlFile: urlFileStorage,
       timestamp: Date.now(),
+      curso: curso,
+      orientador: orientador, 
+      aluno: aluno,
+      desenvolvedor: desenvolvedor || '',
+      observacoes: observacoes || '',
     };
 
     await setDoc(projetoRef, projetoData);
@@ -300,6 +310,61 @@ function RegisterProject() {
               </label>
             </div>
           </div>
+                    <div className="form-row">
+            <div className="form-group left-group">
+              <label>
+                Aluno:
+                <input
+                  className='input-form'
+                  type="text"
+                  name="titulo"
+                  value={aluno}
+                  onChange={(event) => setAluno(event.target.value)}
+                  required
+                />
+              </label>
+            </div>
+            <div className="form-group right-group">
+              <label>
+                Orientador:
+                <input
+                  className='input-form'
+                  type="text"
+                  name="titulo"
+                  value={orientador}
+                  onChange={(event) => setOrientador(event.target.value)}
+                  required
+                />
+              </label>
+            </div>
+          </div>
+          <div className="form-row">
+            <div className="form-group left-group">
+              <label>
+                Desenvolvedor:
+                <input
+                  className='input-form'
+                  type="text"
+                  name="titulo"
+                  value={desenvolvedor}
+                  onChange={(event) => setDesenvolvedor(event.target.value)}
+                />
+              </label>
+            </div>
+            <div className="form-group right-group">
+              <label>
+                Curso:
+                <input
+                  className='input-form'
+                  type="text"
+                  name="titulo"
+                  value={curso}
+                  onChange={(event) => setCurso(event.target.value)}
+                  required
+                />
+              </label>
+            </div>
+          </div>
           <div className="form-row">
             <div className="form-group">
               <label>
@@ -319,7 +384,22 @@ function RegisterProject() {
               </label>
             </div>
           </div>
-          <label htmlFor="file-upload" className="file-input-label">
+          <label>
+                Observações adicionais:
+                <textarea
+                  className='textArea-form'
+                  name="observacoes"
+                  value={observacoes}
+                  onChange={(event) => setObservacoes(event.target.value)}
+                  maxLength={550}
+                  rows={4}
+                  required
+                /> 
+               <div id="warning" style={{ color: warning.color }}>
+                  {warning.message}
+                </div>
+              </label>
+                        <label htmlFor="file-upload" className="file-input-label">
             <span>
               {'Selecione um arquivo PDF ou DOC'}
             </span>
@@ -341,21 +421,6 @@ function RegisterProject() {
               required
             /> */}
           </label>
-          <label>
-                Observações adicionais:
-                <textarea
-                  className='textArea-form'
-                  name="observacoes"
-                  value={descricaoProjeto}
-                  onChange={(event) => setDescricaoProjeto(event.target.value)}
-                  maxLength={550}
-                  rows={4}
-                  required
-                />
-               <div id="warning" style={{ color: warning.color }}>
-                  {warning.message}
-                </div>
-              </label>
           <button className='Button-project' type="submit">
             Enviar
           </button>
