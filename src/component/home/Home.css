@@ -68,7 +68,8 @@ h2{
 }
 
 .button-visita:hover, .button-projetos:hover {
-  background-color: gray; 
+  background-color: #00befb;
+  color: black;
 }
 
 .container-inovacao{
