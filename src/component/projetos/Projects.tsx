@@ -11,6 +11,9 @@ function Projects() {
     titulo?: string;
     descricaoProjeto?: string;
     etapa?: string;
+    aluno?:string;
+    orientador?: string;
+    desenvolvedor?: string;
     timestamp?: number;
     urlFile?: string;
   }[]>([]);
@@ -52,10 +55,8 @@ function Projects() {
       if (!window.confirm('Tem certeza que deseja deletar este projeto e seu arquivo?')) return;
 
       try {
-        // Deleta o documento do Firestore
         await deleteDoc(doc(db, 'projetos', projetoID));
 
-        // Deleta o arquivo na API se existir
         if (urlFile) {
           const filename = getFilenameFromUrl(urlFile);
           const response = await fetch(`http://localhost:3333/delete-file/${projetoID}/${filename}`, {
@@ -68,7 +69,7 @@ function Projects() {
         }
 
         alert('Projeto e arquivo deletados com sucesso!');
-        fetchDocuments(); // Atualiza a lista de projetos
+        fetchDocuments();
       } catch (error) {
         console.error(error);
         alert('Falha ao deletar projeto e arquivo.');
@@ -121,7 +122,16 @@ function Projects() {
         return (
           <div key={doc.id} className="div-container">
             <h1 className="header-row">{doc.titulo || 'Sem título'}</h1>
-            <h2>{doc.etapa || 'Sem etapa'}</h2>
+             {user && (<h2>{doc.etapa || 'Sem etapa'}</h2>)}
+            <h3>
+              {doc.aluno ? `Aluno: ${doc.aluno}` : ''}
+              {doc.aluno && doc.orientador ? ' | ' : ''}
+              {doc.orientador ? `Orientador: ${doc.orientador}` : ''}
+              {(doc.aluno || doc.orientador) && doc.desenvolvedor ? ' | ' : ''}
+              {doc.desenvolvedor ? `Desenvolvedor: ${doc.desenvolvedor}` : ' | Sem desenvolvedor'}
+            </h3>
+
+
             <p>{doc.descricaoProjeto || 'Sem descrição'}</p>
 
             {user && (
